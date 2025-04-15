@@ -1,0 +1,38 @@
+name: PR Test Case and Commit Service Integration
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  test-case-and-commit:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Set up JDK
+      uses: actions/setup-java@v3
+      with:
+        distribution: 'temurin'
+        java-version: '17'
+
+    - name: Cache Gradle dependencies
+      uses: actions/cache@v3
+      with:
+        path: ~/.gradle/caches
+        key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+        restore-keys: |
+          ${{ runner.os }}-gradle-
+
+    - name: Build the project
+      run: ./gradlew build
+
+    - name: Run PRTestCaseService and PRCommitService
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        AI_API_KEY: ${{ secrets.AI_API_KEY }}
+      run: |
+        ./gradlew run --args="fetchPRChanges <owner> <repo> ${{ github.event.pull_request.number }}" > pr_changes.json
+        ./gradlew run --args="addTestCasesToPR \"$GENERATED_TEST_CASES\" ${{ github.event.pull_request.head.ref }}"
