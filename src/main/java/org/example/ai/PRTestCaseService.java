@@ -16,7 +16,7 @@ import java.util.List;
 @Service
 public class PRTestCaseService {
 
-    private static final String GITHUB_API_URL = "https://api.github.com/repos/lalith-chennupati/ActionInAction/pulls/1/files";
+    private static final String GITHUB_API_URL = "https://api.github.com/repos/lalith-chennupati/ActionInAction/pulls/";
     private static final String AI_API_URL = "https://api.openai.com/v1/chat/completions";
     private static final String GITHUB_TOKEN = System.getenv("GIT_TOKEN");
     private static final String AI_API_KEY = System.getenv("AI_API_KEY");
@@ -29,9 +29,9 @@ public class PRTestCaseService {
         headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON)); // Fixed here
 
         HttpEntity<String> request = new HttpEntity<>(headers);
-
+        String gitUrl = GITHUB_API_URL+prNumber+"/files";
         ResponseEntity<String> response = restTemplate.exchange(
-                GITHUB_API_URL,
+                gitUrl,
                 HttpMethod.GET,
                 request,
                 String.class
