@@ -33,7 +33,7 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         AI_API_KEY: ${{ secrets.AI_API_KEY }}
-      run: java -cp build/libs/ActionInAction-0.0.1-SNAPSHOT.jar org.example.ai.PRTestCaseService \
-        ${{ github.repository_owner }} \
-        ${{ github.event.repository.name }} \
+      run: java -cp build/libs/ActionInAction-0.0.1-SNAPSHOT.jar org.example.ai.PRTestCaseService 
+        ${{ github.repository_owner }} 
+        ${{ github.event.repository.name }} 
         ${{ github.event.pull_request.number }}
