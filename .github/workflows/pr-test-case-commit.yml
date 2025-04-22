@@ -34,5 +34,5 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         AI_API_KEY: ${{ secrets.AI_API_KEY }}
       run: |
-        ./gradlew run --args="fetchPRChanges <owner> <repo> ${{ github.event.pull_request.number }}" > pr_changes.json
+        ./gradlew run --args="fetchPRChanges ${{ github.repository_owner }} ${{ github.event.repository.name }} ${{ github.event.pull_request.number }}" > pr_changes.json
         ./gradlew run --args="addTestCasesToPR \"$GENERATED_TEST_CASES\" ${{ github.event.pull_request.head.ref }}"
