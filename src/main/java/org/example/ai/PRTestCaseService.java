@@ -163,14 +163,31 @@ public class PRTestCaseService {
             }
         });
     }
-    /*public static void main(String[] args) {
+    public static void main(String[] args) {
+        if (args.length < 3) {
+            System.err.println("Usage: java PRTestCaseService <owner> <repo> <prNumber>");
+            return;
+        }
+
+        String owner = args[0];
+        String repo = args[1];
+        int prNumber;
+
+        try {
+            prNumber = Integer.parseInt(args[2]);
+        } catch (NumberFormatException e) {
+            System.err.println("Invalid PR number: " + args[2]);
+            return;
+        }
+
         try {
             PRTestCaseService service = new PRTestCaseService();
-            service.generateTestClassesForEachFile("owner", "repo", 1);
-        }catch(Exception e){
-            System.err.println("Error: " + e);
+            service.generateTestClassesForEachFile(owner, repo, prNumber);
+        } catch (Exception e) {
+            System.err.println("Error: " + e.getMessage());
         }
-         System.out.println("COMPLETED");
-    }*/
+
+        System.out.println("COMPLETED");
+    }
 }
 
