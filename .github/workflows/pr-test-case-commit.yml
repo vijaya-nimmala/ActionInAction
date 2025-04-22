@@ -27,7 +27,7 @@ jobs:
           ${{ runner.os }}-gradle-
 
     - name: Build the project
-      run: ./gradlew build
+      run: ./gradlew clean build
 
     - name: Run PRTestCaseService and PRCommitService
       env:
