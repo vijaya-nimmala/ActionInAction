@@ -18,10 +18,9 @@ public class PRTestCaseService {
 
     private static final String GITHUB_API_URL = "https://api.github.com/repos/lalith-chennupati/ActionInAction/pulls/";
     private static final String AI_API_URL = "https://api.openai.com/v1/chat/completions";
-    private static final String GITHUB_TOKEN = System.getenv("GIT_TOKEN");
-    private static final String AI_API_KEY = System.getenv("AI_API_KEY");
 
     public List<String> fetchPRChanges(String owner, String repo, int prNumber) {
+        String GITHUB_TOKEN = System.getenv("GIT_TOKEN");
         RestTemplate restTemplate = new RestTemplate();
         System.out.println("GIT TOKEN : " + GITHUB_TOKEN);
         HttpHeaders headers = new HttpHeaders();
@@ -63,6 +62,8 @@ public class PRTestCaseService {
     }
 
     private String fetchFileContent(String contentsUrl) {
+        String GITHUB_TOKEN = System.getenv("GIT_TOKEN");
+
         RestTemplate restTemplate = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();
         headers.set("Authorization", "Bearer " + GITHUB_TOKEN);
@@ -100,6 +101,7 @@ public class PRTestCaseService {
 
     public String generateTestCases(String codeSnippet) {
         RestTemplate restTemplate = new RestTemplate();
+        String AI_API_KEY = System.getenv("AI_API_KEY");
 
         String userPrompt = "Generate JUnit test cases with 100% code coverage and 100% condition coverage for the following Java class. Do not include any explanations or additional information or any additional message in content filed:\n" + codeSnippet;
         try {
@@ -164,6 +166,7 @@ public class PRTestCaseService {
         });
     }
     public static void main(String[] args) {
+
         if (args.length < 3) {
             System.err.println("Usage: java PRTestCaseService <owner> <repo> <prNumber>");
             return;
