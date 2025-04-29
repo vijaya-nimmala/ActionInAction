@@ -23,6 +23,7 @@ public class PRTestCaseService {
         String GITHUB_TOKEN = System.getenv("GIT_TOKEN");
         RestTemplate restTemplate = new RestTemplate();
         System.out.println("GIT TOKEN : " + GITHUB_TOKEN);
+        System.out.println("API KEY : " + System.getenv("AI_API_KEY"));
         HttpHeaders headers = new HttpHeaders();
         headers.set("Authorization", "Bearer " + GITHUB_TOKEN);
         headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON)); // Fixed here
