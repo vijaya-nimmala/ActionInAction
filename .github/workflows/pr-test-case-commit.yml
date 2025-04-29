@@ -3,7 +3,9 @@ name: PR Test Case and Commit Service Integration
 on:
   pull_request:
     types: [opened, synchronize, reopened]
-
+permissions:
+  contents: read
+  pull-requests: write
 jobs:
   test-case-and-commit:
     runs-on: ubuntu-latest
@@ -28,7 +30,10 @@ jobs:
 
     - name: Build the project
       run: ./gradlew shadowJar
-
+    - name: Debug GIT_TOKEN
+      run: echo "GIT_TOKEN=${GIT_TOKEN}"
+      env:
+      GIT_TOKEN: ${{ secrets.GIT_TOKEN }}
     - name: Run PRTestCaseService and PRCommitService
       env:
         GIT_TOKEN: ${{ secrets.GIT_TOKEN }}
