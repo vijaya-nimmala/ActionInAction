@@ -23,7 +23,7 @@ public class PRTestCaseService {
 
     public List<String> fetchPRChanges(String owner, String repo, int prNumber) {
         RestTemplate restTemplate = new RestTemplate();
-
+        System.out.println("GIT TOKEN : " + GITHUB_TOKEN);
         HttpHeaders headers = new HttpHeaders();
         headers.set("Authorization", "Bearer " + GITHUB_TOKEN);
         headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON)); // Fixed here
