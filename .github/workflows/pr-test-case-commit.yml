@@ -6,7 +6,6 @@ on:
 permissions:
   contents: read
   actions: read
-  secrets: read
 jobs:
   test-case-and-commit:
     runs-on: ubuntu-latest
