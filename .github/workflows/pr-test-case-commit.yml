@@ -31,7 +31,16 @@ jobs:
 
       - name: Build the project
         run: ./gradlew shadowJar
-
+      - name: Debug Environment Variables
+        run: |
+          if [ -z "$GIT_TOKEN" ]; then echo "GIT_TOKEN is empty"; else echo "GIT_TOKEN is set"; fi
+          if [ -z "$AI_API_KEY" ]; then echo "AI_API_KEY is empty"; else echo "AI_API_KEY is set"; fi
+          if [ -z "$TEST_KEY" ]; then echo "TEST_KEY is empty"; else echo "TEST_KEY is set"; fi
+        env:
+          GIT_TOKEN: ${{ secrets.GIT_TOKEN }}
+          AI_API_KEY: ${{ secrets.AI_API_KEY }}
+          TEST_KEY: ${{ secrets.TEST_KEY }}
+          
       - name: Run PRTestCaseService and PRCommitService
         env:
           GIT_TOKEN: ${{ secrets.GIT_TOKEN }}
