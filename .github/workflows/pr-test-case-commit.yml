@@ -3,11 +3,6 @@ name: PR Test Case and Commit Service Integration
 on:
   pull_request:
     types: [opened, synchronize, reopened]
-  workflow_dispatch:
-    inputs:
-      custom_input:
-        description: 'Custom input value'
-        required: true
 permissions:
   contents: write
   pull-requests: write
@@ -33,11 +28,15 @@ jobs:
           key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
           restore-keys: |
             ${{ runner.os }}-gradle-
-      - name: Use Workflow Input
+      - name: Set Output
+        id: set-output
+        run: echo "::set-output name=custom_output::Hello World"
+
+      - name: Use Output as Env Variable
         run:
-          echo "Custom Input: $CUSTOM_INPUT"
+          echo "Output: $CUSTOM_OUTPUT"
         env:
-          CUSTOM_INPUT: ${{ github.event.inputs.custom_input }}
+          CUSTOM_OUTPUT: ${{ steps.set-output.outputs.custom_output }}
       - name: Debug Environment Variables
         run: |
           if [ -z "$GIT_TOKEN" ]; then echo "GIT_TOKEN is empty"; else echo "GIT_TOKEN is set"; fi
