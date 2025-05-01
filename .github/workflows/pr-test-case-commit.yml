@@ -28,10 +28,6 @@ jobs:
           key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
           restore-keys: |
             ${{ runner.os }}-gradle-
-
-      - name: Build the project
-        run: ./gradlew shadowJar --no-daemon
-        
       - name: Debug Environment Variables
         run: |
           if [ -z "$GIT_TOKEN" ]; then echo "GIT_TOKEN is empty"; else echo "GIT_TOKEN is set"; fi
@@ -42,6 +38,8 @@ jobs:
           GIT_VAR_TOKEN: ${{ vars.SAMPLE_KEY }}
           AI_API_KEY: ${{ secrets.AI_API_KEY }}
           TEST_KEY: ${{ secrets.TEST_KEY }}
+      - name: Build Shadow Jar
+        run: ./gradlew shadowJar --no-daemon
 
       - name: Run PRTestCaseService and PRCommitService
         env:
