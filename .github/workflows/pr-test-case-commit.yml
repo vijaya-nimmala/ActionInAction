@@ -28,15 +28,7 @@ jobs:
           key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
           restore-keys: |
             ${{ runner.os }}-gradle-
-      - name: Set Output
-        id: set-output
-        run: echo "::set-output name=custom_output::Hello World"
-
-      - name: Use Output as Env Variable
-        run:
-          echo "Output: $CUSTOM_OUTPUT"
-        env:
-          CUSTOM_OUTPUT: ${{ steps.set-output.outputs.custom_output }}
+      
       - name: Debug Environment Variables
         run: |
           if [ -z "$GIT_TOKEN" ]; then echo "GIT_TOKEN is empty"; else echo "GIT_TOKEN is set"; fi
