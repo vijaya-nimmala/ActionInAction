@@ -40,8 +40,8 @@ jobs:
 
       - name: Run PRTestCaseService and PRCommitService
         env:
-          GIT_TOKEN: ${ env.GIT_TOKEN }
-          AI_API_KEY: ${ env.AI_API_KEY }
+          GIT_TOKEN: ${{ env.GIT_TOKEN }}
+          AI_API_KEY: ${{ env.AI_API_KEY }}
         run: java -cp build/libs/ActionInAction-0.0.1-SNAPSHOT.jar org.example.ai.PRTestCaseService
           ${{ github.repository_owner }}
           ${{ github.event.repository.name }}
