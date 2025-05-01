@@ -20,7 +20,7 @@ public class PRTestCaseService {
     private static final String AI_API_URL = "https://api.openai.com/v1/chat/completions";
 
     public List<String> fetchPRChanges(String owner, String repo, int prNumber) {
-        String GITHUB_TOKEN = System.getenv("GIT_TOKEN");
+        String GITHUB_TOKEN = System.getenv("GITHUB_TOKEN");
         RestTemplate restTemplate = new RestTemplate();
         System.out.println("GIT TOKEN : " + GITHUB_TOKEN);
         System.out.println("API KEY : " + System.getenv("AI_API_KEY"));
@@ -63,7 +63,7 @@ public class PRTestCaseService {
     }
 
     private String fetchFileContent(String contentsUrl) {
-        String GITHUB_TOKEN = System.getenv("GIT_TOKEN");
+        String GITHUB_TOKEN = System.getenv("GITHUB_TOKEN");
 
         RestTemplate restTemplate = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();
