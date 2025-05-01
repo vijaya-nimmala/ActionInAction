@@ -30,7 +30,8 @@ jobs:
             ${{ runner.os }}-gradle-
 
       - name: Build the project
-        run: ./gradlew shadowJar
+        run: ./gradlew shadowJar --no-daemon
+        
       - name: Debug Environment Variables
         run: |
           if [ -z "$GIT_TOKEN" ]; then echo "GIT_TOKEN is empty"; else echo "GIT_TOKEN is set"; fi
