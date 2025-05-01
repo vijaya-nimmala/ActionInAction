@@ -3,6 +3,9 @@ name: PR Test Case and Commit Service Integration
 on:
   pull_request:
     types: [opened, synchronize, reopened]
+permissions:
+  contents: write
+  pull-requests: write
 
 jobs:
   test-case-and-commit:
@@ -16,7 +19,7 @@ jobs:
         uses: actions/setup-java@v3
         with:
           distribution: 'temurin'
-          java-version: '17'
+          java-version: '21'
 
       - name: Cache Gradle dependencies
         uses: actions/cache@v3
@@ -27,11 +30,24 @@ jobs:
             ${{ runner.os }}-gradle-
 
       - name: Build the project
-        run: ./gradlew build
+        run: ./gradlew shadowJar
+      - name: Debug Environment Variables
+        run: |
+          if [ -z "$GIT_TOKEN" ]; then echo "GIT_TOKEN is empty"; else echo "GIT_TOKEN is set"; fi
+          if [ -z "$AI_API_KEY" ]; then echo "AI_API_KEY is empty"; else echo "AI_API_KEY is set"; fi
+          if [ -z "$TEST_KEY" ]; then echo "TEST_KEY is empty"; else echo "TEST_KEY is set"; fi
+        env:
+          GIT_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+          GIT_VAR_TOKEN: ${{ vars.GIT_TOKEN }}
+          AI_API_KEY: ${{ secrets.AI_API_KEY }}
+          TEST_KEY: ${{ secrets.TEST_KEY }}
 
       - name: Run PRTestCaseService and PRCommitService
         env:
-          GITHUB_TOKEN: ${{ secrets.GIT_TOKEN }}
+          GIT_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
           AI_API_KEY: ${{ secrets.AI_API_KEY }}
-        run: |
-          ./gradlew run --args="generateTestClassesForEachFile ${{ github.repository_owner }} ${{ github.event.repository.name }} ${{ github.event.pull_request.number }}" > pr_changes.json
+          TEST_KEY: ${{ secrets.TEST_KEY }}
+        run: java -cp build/libs/ActionInAction-0.0.1-SNAPSHOT.jar org.example.ai.PRTestCaseService
+          ${{ github.repository_owner }}
+          ${{ github.event.repository.name }}
+          ${{ github.event.pull_request.number }}
