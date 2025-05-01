@@ -12,11 +12,12 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Set Output
-        id: set-output
-        run: echo "::set-output name=custom_output::Hello World"
+      - name: Set environment variable
+        run: echo "MY_ENV_VAR=myValue" >> $GITHUB_ENV
 
-    
+      - name: Use environment variable
+        run: |
+          echo "The value of MY_ENV_VAR is $MY_ENV_VAR"
       - name: Checkout code
         uses: actions/checkout@v3
 
