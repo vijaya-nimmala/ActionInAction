@@ -40,7 +40,10 @@ jobs:
           TEST_KEY: ${{ secrets.TEST_KEY }}
       - name: Build Shadow Jar
         run: ./gradlew shadowJar --no-daemon
-
+        env:
+          GIT_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+          AI_API_KEY: ${{ secrets.AI_API_KEY }}
+          TEST_KEY: ${{ secrets.TEST_KEY }}
       - name: Run PRTestCaseService and PRCommitService
         env:
           GIT_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
