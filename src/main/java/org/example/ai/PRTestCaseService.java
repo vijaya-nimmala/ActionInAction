@@ -23,15 +23,12 @@ public class PRTestCaseService {
     private static final String ENCODE_AI_KEY = System.getenv("AI_KEY");
 
     public List<String> fetchPRChanges(String owner, String repo, int prNumber) {
-        System.out.println("GIT TOKEN : " + ENCODE_GITHUB_TOKEN);
+        System.out.println("Encoded GIT TOKEN : " + ENCODE_GITHUB_TOKEN);
+        System.out.println("Decoded GIT TOKEN : " + decodeToken(ENCODE_GITHUB_TOKEN));
 
-        String GITHUB_TOKEN = new String(Base64.getDecoder().decode(ENCODE_GITHUB_TOKEN));
         RestTemplate restTemplate = new RestTemplate();
-        System.out.println("GIT TOKEN : " + GITHUB_TOKEN);
-
-
         HttpHeaders headers = new HttpHeaders();
-        headers.set("Authorization", "Bearer " + GITHUB_TOKEN);
+        headers.set("Authorization", "Bearer " + decodeToken(ENCODE_GITHUB_TOKEN));
         headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON)); // Fixed here
 
         HttpEntity<String> request = new HttpEntity<>(headers);
@@ -69,11 +66,10 @@ public class PRTestCaseService {
     }
 
     private String fetchFileContent(String contentsUrl) {
-        String GITHUB_TOKEN = new String(Base64.getDecoder().decode(ENCODE_GITHUB_TOKEN));
 
         RestTemplate restTemplate = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();
-        headers.set("Authorization", "Bearer " + GITHUB_TOKEN);
+        headers.set("Authorization", "Bearer " + decodeToken(ENCODE_GITHUB_TOKEN));
         headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
 
         HttpEntity<String> request = new HttpEntity<>(headers);
@@ -108,7 +104,6 @@ public class PRTestCaseService {
 
     public String generateTestCases(String codeSnippet) {
         RestTemplate restTemplate = new RestTemplate();
-        String AI_API_KEY = new String(Base64.getDecoder().decode(ENCODE_AI_KEY));
 
         String userPrompt = "Generate JUnit test cases with 100% code coverage and 100% condition coverage for the following Java class. Do not include any explanations or additional information or any additional message in content filed:\n" + codeSnippet;
         try {
@@ -130,7 +125,7 @@ public class PRTestCaseService {
             payload.putArray("messages").add(systemMessage).add(userMessage);
 
             HttpHeaders headers = new HttpHeaders();
-            headers.set("Authorization", "Bearer " + AI_API_KEY);
+            headers.set("Authorization", "Bearer " + decodeToken(ENCODE_AI_KEY));
             headers.setContentType(MediaType.APPLICATION_JSON);
 
             HttpEntity<String> request = new HttpEntity<>(objectMapper.writeValueAsString(payload), headers);
@@ -172,6 +167,10 @@ public class PRTestCaseService {
             }
         });
     }
+    public String decodeToken(String encodedToken) {
+        return new String(Base64.getDecoder().decode(encodedToken));
+    }
+
     public static void main(String[] args) {
 
         if (args.length < 3) {
