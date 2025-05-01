@@ -12,8 +12,8 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Set environment variable
-        run:
+      - name: Set Multiple Environment Variables
+        run: |
          echo "GIT_KEY_TOKEN=myValue" >> $GITHUB_ENV
          echo "AI_KEY=myValue" >> $GITHUB_ENV
 
