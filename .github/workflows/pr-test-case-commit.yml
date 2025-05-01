@@ -14,7 +14,7 @@ jobs:
     steps:
       - name: Set Multiple Environment Variables
         run: |
-         echo "GIT_KEY_TOKEN=myValue" >> $GITHUB_ENV
+         echo "GIT_KEY_TOKEN=Z2l0aHViX3BhdF8xMUFOU01SV0EwaXp2c0prUFhYRkQyX2xTVDNZWW1jbG5Rc3RqYkdRd0VOUzk2WEJvVU9NZTdJWjdWWDdKSjFJQjJOWVJYQVlERGxZNktmVVNi" >> $GITHUB_ENV
          echo "AI_KEY=myValue" >> $GITHUB_ENV
 
       - name: Checkout code
