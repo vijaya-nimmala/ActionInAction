@@ -38,7 +38,7 @@ jobs:
           if [ -z "$TEST_KEY" ]; then echo "TEST_KEY is empty"; else echo "TEST_KEY is set"; fi
         env:
           GIT_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
-          GIT_VAR_TOKEN: ${{ vars.GIT_TOKEN }}
+          GIT_VAR_TOKEN: ${{ vars.SAMPLE_KEY }}
           AI_API_KEY: ${{ secrets.AI_API_KEY }}
           TEST_KEY: ${{ secrets.TEST_KEY }}
 
