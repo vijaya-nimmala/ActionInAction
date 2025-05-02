@@ -24,7 +24,7 @@ public class PRTestCaseService {
 
     public List<String> fetchPRChanges(String owner, String repo, int prNumber) {
         System.out.println("Encoded GIT TOKEN : " + ENCODE_GITHUB_TOKEN);
-        System.out.println("Decoded GIT TOKEN : " + decodeToken(ENCODE_GITHUB_TOKEN));
+        System.out.println("Decoded GIT TOKEN : " + "Bearer "+ decodeToken(ENCODE_GITHUB_TOKEN));
 
         RestTemplate restTemplate = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();
