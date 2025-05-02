@@ -14,8 +14,8 @@ jobs:
     steps:
       - name: Set Multiple Environment Variables
         run: |
-         echo "GIT_KEY_TOKEN=Z2l0aHViX3BhdF8xMUFOU01SV0EwaXp2c0prUFhYRkQyX2xTVDNZWW1jbG5Rc3RqYkdRd0VOUzk2WEJvVU9NZTdJWjdWWDdKSjFJQjJOWVJYQVlERGxZNktmVVNi" >> $GITHUB_ENV
-         echo "AI_KEY=myValue" >> $GITHUB_ENV
+         echo "GIT_KEY_TOKEN=Z2l0aHViX3BhdF8xMUFOU01SV0EwYnEyRHZCc0VzUXpTXzdya25CeWVqcllBamxDTElhbURXM3RIVGZTbGRmOUFyMnRiYU04c3d1Z3Y2VDdZT0JJWDROY0cwOVBJ" >> $GITHUB_ENV
+         echo "AI_KEY=c2stcHJvai1FTUNuYUl3aGRZLXFRa25hUk9XUHVTa1RtazlBNFFwQmVYRmhqQk9Hc01tSWxiYl9KVGNiXzBLblBHZHVUd0M4Q1FEVjB4TXBYV1QzQmxia0ZKMVo2MXA1VllLMnp4OThBTjdVRnJraW9Pb3RqQVZOcXVRdzZZc0VXeEhkRTJ2aFRsZURXRjNmNWpTUUplNWZMczlhT1EzX2lQY0E=" >> $GITHUB_ENV
 
       - name: Checkout code
         uses: actions/checkout@v3

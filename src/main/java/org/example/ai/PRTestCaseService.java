@@ -105,7 +105,7 @@ public class PRTestCaseService {
     public String generateTestCases(String codeSnippet) {
         RestTemplate restTemplate = new RestTemplate();
 
-        String userPrompt = "Generate JUnit test cases with 100% code coverage and 100% condition coverage for the following Java class. Do not include any explanations or additional information or any additional message in content filed:\n" + codeSnippet;
+        String userPrompt = "Generate JUnit test cases using JUNIT5 and jakartaee10 with MockitoExtension with 100% code coverage and 100% condition coverage for the following Java class. Only provide the code, no explanations or markdown formatting:\n" + codeSnippet;
         try {
             // Use ObjectMapper to construct the JSON payload
             ObjectMapper objectMapper = new ObjectMapper();
@@ -116,7 +116,7 @@ public class PRTestCaseService {
 
             ObjectNode systemMessage = objectMapper.createObjectNode();
             systemMessage.put("role", "system");
-            systemMessage.put("content", "You are a helpful assistant.");
+            systemMessage.put("content", "You provide Java code as plain text without markdown, triple backticks, or any other formatting. Only pure Java code should be returned.");
 
             ObjectNode userMessage = objectMapper.createObjectNode();
             userMessage.put("role", "user");
@@ -173,17 +173,17 @@ public class PRTestCaseService {
 
     public static void main(String[] args) {
 
-        if (args.length < 3) {
+       /* if (args.length < 3) {
             System.err.println("Usage: java PRTestCaseService <owner> <repo> <prNumber>");
             return;
-        }
+        }*/
 
-        String owner = args[0];
-        String repo = args[1];
+        String owner = null; //args[0];
+        String repo = null; //args[1];
         int prNumber;
 
         try {
-            prNumber = Integer.parseInt(args[2]);
+            prNumber = 9;// Integer.parseInt(args[2]);
         } catch (NumberFormatException e) {
             System.err.println("Invalid PR number: " + args[2]);
             return;

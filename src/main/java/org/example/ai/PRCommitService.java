@@ -11,6 +11,7 @@ import java.nio.file.Path;
 public class PRCommitService {
 
     public static void addTestCasesToPR(String testClassContent, String branchName) throws Exception {
+        System.out.println("Starting of addTestCasesToPR");
         try {
             // Save test cases to a file
             String packageName = null;
